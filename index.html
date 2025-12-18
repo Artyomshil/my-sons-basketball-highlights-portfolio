@@ -84,6 +84,14 @@
     .heroTop{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
     .title{margin:0;font-size:34px;letter-spacing:-.7px}
     .subtitle{margin:8px 0 0;color:var(--muted);font-size:14px;max-width:70ch}
+    <div class="playerCard" style="margin-top:14px">
+  <img class="playerPhoto" src="LEV_bball.jpg" alt="Лев Шиляев" />
+  <div class="playerMeta">
+    <p class="name" id="ui_player_name">Лев Шиляев</p>
+    <p class="sub" id="ui_player_tag">Юный баскетболист • Визитка и прогресс</p>
+  </div>
+</div>
+
     .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .badge{
       padding:8px 10px;border-radius:14px;
@@ -168,6 +176,23 @@
     th{color:var(--muted);font-weight:800;background: rgba(255,255,255,.03)}
     tr:last-child td{border-bottom:0}
     .footer{margin:20px 0 30px;text-align:center;color:rgba(234,240,255,.55);font-size:12px}
+    .playerCard{
+  display:flex; gap:14px; align-items:center;
+  padding:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  border-radius: 18px;
+}
+.playerPhoto{
+  width:110px; height:110px; border-radius:18px;
+  object-fit:cover;
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow: 0 16px 40px rgba(0,0,0,.35);
+  flex:0 0 auto;
+}
+.playerMeta .name{font-size:18px;font-weight:900;letter-spacing:-.3px;margin:0}
+.playerMeta .sub{margin:6px 0 0;color:var(--muted);font-size:13px}
+    
   </style>
 </head>
 
