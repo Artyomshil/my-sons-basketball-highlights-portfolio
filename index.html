@@ -1,10 +1,509 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <title>Мой первый сайт</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Лев Шиляев • Basketball</title>
+  <meta name="description" content="Визитка юного баскетболиста: достижения, прогресс, дневник тренировок, интерактив." />
+
+  <style>
+    :root{
+      --bg:#070A12;
+      --card:#0B1022;
+      --card2:#0C1430;
+      --text:#EAF0FF;
+      --muted:#A9B6E6;
+      --line:rgba(255,255,255,.12);
+      --a:#7C5CFF;
+      --b:#2BE7FF;
+      --g:#3DFF8B;
+      --y:#FFD24D;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --r: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 700px at 15% 5%, rgba(124,92,255,.35), transparent 55%),
+        radial-gradient(900px 700px at 85% 0%, rgba(43,231,255,.20), transparent 60%),
+        radial-gradient(900px 700px at 70% 90%, rgba(61,255,139,.12), transparent 55%),
+        var(--bg);
+      line-height:1.35;
+    }
+    a{color:inherit}
+    .topbar{
+      position:sticky;top:0;z-index:20;
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+      padding:14px 18px;
+      background: linear-gradient(to bottom, rgba(7,10,18,.92), rgba(7,10,18,.55));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:36px;height:36px;border-radius:12px;
+      background: linear-gradient(135deg, var(--a), var(--b));
+      box-shadow: 0 10px 30px rgba(124,92,255,.25);
+      flex:0 0 auto;
+    }
+    .brand h1{margin:0;font-size:14px;letter-spacing:.3px}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+    .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .btn{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:.15s transform, .15s background, .15s border;
+      font-weight:700;
+      font-size:13px;
+    }
+    .btn:hover{transform:translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.22);}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(43,231,255,.60));
+      border-color: transparent;
+    }
+    .btn.primary:hover{background: linear-gradient(135deg, rgba(124,92,255,1), rgba(43,231,255,.72));}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px}
+    .hero{
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      background:
+        radial-gradient(700px 420px at 10% 0%, rgba(124,92,255,.26), transparent 60%),
+        radial-gradient(700px 420px at 90% 0%, rgba(43,231,255,.14), transparent 60%),
+        linear-gradient(180deg, rgba(12,20,48,.95), rgba(11,16,34,.62));
+      padding:20px;
+      overflow:hidden;
+    }
+    .heroTop{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
+    .title{margin:0;font-size:34px;letter-spacing:-.7px}
+    .subtitle{margin:8px 0 0;color:var(--muted);font-size:14px;max-width:70ch}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .badge{
+      padding:8px 10px;border-radius:14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      font-size:12px;
+      display:flex;gap:8px;align-items:center;
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background: var(--b); box-shadow:0 0 14px rgba(43,231,255,.55)}
+    .dot.g{background: var(--g); box-shadow:0 0 14px rgba(61,255,139,.40)}
+    .dot.y{background: var(--y); box-shadow:0 0 14px rgba(255,210,77,.35)}
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:16px}
+    @media (max-width:960px){.grid{grid-template-columns:1fr}}
+    .card{
+      background: linear-gradient(180deg, rgba(11,16,34,.92), rgba(11,16,34,.62));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+    .sectionTitle{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:0 0 10px}
+    .sectionTitle h2{margin:0;font-size:16px}
+    .sectionTitle span{color:var(--muted);font-size:12px}
+    .kv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+    @media (max-width:520px){.kv{grid-template-columns:1fr}}
+    .k{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 14px;
+      padding:12px;
+    }
+    .k .n{font-size:22px;font-weight:900;letter-spacing:-.6px}
+    .k .l{color:var(--muted);font-size:12px;margin-top:4px}
+    .list{display:grid;gap:10px}
+    .item{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 14px;
+      padding:12px;
+    }
+    .item strong{display:block;font-size:13px}
+    .item small{color:var(--muted);display:block;margin-top:4px}
+    .mini{font-size:12px;color:var(--muted)}
+    .sep{height:1px;background: rgba(255,255,255,.10);margin:12px 0}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    input, textarea, select{
+      width:100%;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      outline:none;
+      font-size:13px;
+    }
+    textarea{min-height:92px;resize:vertical}
+    input::placeholder, textarea::placeholder{color:rgba(234,240,255,.55)}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width:720px){.two{grid-template-columns:1fr}}
+    canvas{
+      width:100%;
+      height:220px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      display:block;
+    }
+    .videos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:760px){.videos{grid-template-columns:1fr}}
+    .video{
+      border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .ph{
+      height:220px;display:flex;align-items:center;justify-content:center;text-align:center;
+      padding:16px;color:rgba(234,240,255,.75);
+    }
+    .tag{display:inline-flex;gap:8px;align-items:center;padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);background: rgba(255,255,255,.05);color:var(--muted);font-size:12px;}
+    table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.10);background: rgba(255,255,255,.03)}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px;text-align:left;vertical-align:top}
+    th{color:var(--muted);font-weight:800;background: rgba(255,255,255,.03)}
+    tr:last-child td{border-bottom:0}
+    .footer{margin:20px 0 30px;text-align:center;color:rgba(234,240,255,.55);font-size:12px}
+  </style>
 </head>
+
 <body>
-  <h1>Привет!</h1>
-  <p>Это мой первый сайт.</p>
-</body>
-</html>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <h1 id="ui_brand_title">Лев Шиляев • Basketball</h1>
+        <p id="ui_brand_sub">Хайлайты • Достижения • Прогресс</p>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn" id="langBtn">RU / EN</button>
+      <a class="btn primary" href="#contact" id="ui_cta">Связаться</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="heroTop">
+        <div>
+          <h2 class="title" id="ui_title">Лев • юный баскетболист</h2>
+          <p class="subtitle" id="ui_subtitle">
+            Визитка игрока: биография, награды, хайлайты, рост по статистике и дневник тренировок.
+          </p>
+          <div class="badges">
+            <div class="badge"><span class="dot g"></span><span id="ui_badge1">Цель: NBA (мечта + план)</span></div>
+            <div class="badge"><span class="dot"></span><span id="ui_badge2">Хайлайты: скоро</span></div>
+            <div class="badge"><span class="dot y"></span><span id="ui_badge3">Прогресс: график</span></div>
+          </div>
+
+          <div class="kv">
+            <div class="k">
+              <div class="n" id="k_pos">G / SG</div>
+              <div class="l" id="k_pos_l">Позиция (можно поменять)</div>
+            </div>
+            <div class="k">
+              <div class="n" id="k_hw">160 см / 47 кг</div>
+              <div class="l" id="k_hw_l">Рост / Вес</div>
+            </div>
+            <div class="k">
+              <div class="n" id="k_team">—</div>
+              <div class="l" id="k_team_l">Команда / клуб</div>
+            </div>
+            <div class="k">
+              <div class="n" id="k_city">—</div>
+              <div class="l" id="k_city_l">Город</div>
+            </div>
+          </div>
+
+          <p class="mini" style="margin-top:12px" id="ui_privacy">
+            ⚠️ Для публичного сайта лучше не писать адрес/школу/точные личные данные. Достаточно имени и спортивных фактов.
+          </p>
+        </div>
+
+        <div class="card" style="min-width:280px;max-width:420px">
+          <div class="sectionTitle">
+            <h2 id="ui_quick">Быстро</h2>
+            <span id="ui_quick_hint">суть игрока</span>
+          </div>
+          <div class="list">
+            <div class="item">
+              <strong id="ui_q1">Сильные стороны</strong>
+              <small id="ui_q1s">Трудолюбие • Скорость • Любовь к игре (пример — можно поменять)</small>
+            </div>
+            <div class="item">
+              <strong id="ui_q2">Роль на площадке</strong>
+              <small id="ui_q2s">Разгон атак • Защита • Бросок (пример)</small>
+            </div>
+            <div class="item">
+              <strong id="ui_q3">Фокус сейчас</strong>
+              <small id="ui_q3s">% штрафных • дриблинг под давлением • чтение игры (пример)</small>
+            </div>
+          </div>
+
+          <div class="sep"></div>
+
+          <div class="sectionTitle">
+            <h2 id="ui_training">Тренировки</h2>
+            <span id="ui_training_hint">сохраняется на этом устройстве</span>
+          </div>
+
+          <div class="row">
+            <span class="tag"><span id="ui_total_train">Всего:</span> <b id="trainCount">0</b></span>
+            <button class="btn" id="addTrainingBtn">+ Добавить</button>
+            <button class="btn" id="resetTrainBtn" title="Сбросить только на этом устройстве">Сброс</button>
+          </div>
+
+          <div class="two" style="margin-top:10px">
+            <input id="trainTitle" placeholder="Например: тренировка броска / дриблинг" />
+            <input id="trainMinutes" type="number" min="0" placeholder="Минут (например 90)" />
+          </div>
+          <textarea id="trainNote" placeholder="Короткая заметка (что получилось, что улучшать)"></textarea>
+
+          <div class="mini" id="ui_train_note">Нажми “+ Добавить” — запись появится ниже и сохранится.</div>
+
+          <div style="margin-top:10px; max-height:160px; overflow:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th id="ui_t_date">Дата</th>
+                  <th id="ui_t_what">Что</th>
+                  <th id="ui_t_min">Мин</th>
+                </tr>
+              </thead>
+              <tbody id="trainRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card" id="bio">
+        <div class="sectionTitle">
+          <h2 id="ui_bio">Биография</h2>
+          <span id="ui_bio_hint">люди — это история</span>
+        </div>
+        <p id="ui_bio_text" style="margin-top:0;color:rgba(234,240,255,.9)">
+          Лев начал заниматься баскетболом в 5 лет. Он влюблён в игру и мечтает играть в NBA.
+          Здесь — его путь: тренировки, турниры, рост в статистике и лучшие моменты.
+        </p>
+
+        <div class="sep"></div>
+
+        <div class="sectionTitle">
+          <h2 id="ui_ach">Достижения</h2>
+          <span id="ui_ach_hint">добавляйте по мере роста</span>
+        </div>
+
+        <div class="list" id="achList">
+          <div class="item">
+            <strong>🏆 Турнир (пример)</strong>
+            <small id="ui_ach_ex1">Год • Место • Команда • Роль/статистика</small>
+          </div>
+          <div class="item">
+            <strong>🥇 Награда (пример)</strong>
+            <small id="ui_ach_ex2">MVP / лучший защитник / лучший снайпер — что угодно</small>
+          </div>
+        </div>
+
+        <p class="mini" id="ui_ach_tip" style="margin-top:10px">
+          Позже я сделаю удобную форму “добавить награду”, чтобы вы не лазили в код.
+        </p>
+      </div>
+
+      <div class="card" id="highlights">
+        <div class="sectionTitle">
+          <h2 id="ui_hi">Хайлайты</h2>
+          <span id="ui_hi_hint">видео лучших моментов</span>
+        </div>
+
+        <div class="videos">
+          <div class="video">
+            <div class="ph" id="ui_vid1">
+              Пока видео нет 🙂<br><br>
+              Когда появится YouTube — я вставлю сюда ролик одним движением.
+            </div>
+          </div>
+          <div class="video">
+            <div class="ph" id="ui_vid2">
+              Можно сделать: “топ-10 моментов” + “лучший матч” + “защита”.
+            </div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="sectionTitle">
+          <h2 id="ui_progress">Прогресс</h2>
+          <span id="ui_progress_hint">пример графика</span>
+        </div>
+
+        <canvas id="chart" width="900" height="360" aria-label="Progress chart"></canvas>
+
+        <div class="two" style="margin-top:10px">
+          <select id="metric">
+            <option value="pts" selected id="ui_m_pts">Очки за игру (пример)</option>
+            <option value="reb" id="ui_m_reb">Подборы (пример)</option>
+            <option value="ast" id="ui_m_ast">Передачи (пример)</option>
+            <option value="tour" id="ui_m_tour">Турниры/победы (пример)</option>
+          </select>
+          <button class="btn" id="randomizeBtn">Обновить пример</button>
+        </div>
+
+        <p class="mini" id="ui_prog_note" style="margin:10px 0 0">
+          Сейчас тут пример. Потом вы дадите 5–10 реальных точек (по годам/месяцам) — и график станет настоящим.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card" id="quiz">
+        <div class="sectionTitle">
+          <h2 id="ui_quiz">Квиз</h2>
+          <span id="ui_quiz_hint">игра + знания</span>
+        </div>
+
+        <div class="item">
+          <strong id="ui_quiz_q">Вопрос</strong>
+          <small id="quizQuestion">Нажми “Старт”, чтобы начать.</small>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <button class="btn primary" id="quizStart">Старт</button>
+          <button class="btn" id="quizA">A</button>
+          <button class="btn" id="quizB">B</button>
+          <button class="btn" id="quizC">C</button>
+        </div>
+
+        <p class="mini" style="margin-top:10px">
+          <span id="ui_quiz_score">Счёт:</span> <b id="quizScore">0</b>
+        </p>
+
+        <div class="sep"></div>
+
+        <p class="mini" id="ui_quiz_note">
+          Мы можем сделать отдельный режим: “вопросы про достижения Льва”, когда появится список турниров.
+        </p>
+      </div>
+
+      <div class="card" id="contact">
+        <div class="sectionTitle">
+          <h2 id="ui_contact">Контакты</h2>
+          <span id="ui_contact_hint">для тренеров/селекционеров</span>
+        </div>
+
+        <div class="item">
+          <strong id="ui_contact_text">Как связаться</strong>
+          <small id="ui_contact_small">
+            Здесь лучше разместить один безопасный контакт (например, почту родителя или форму).
+          </small>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="two">
+          <input id="contactName" placeholder="Имя контакта (например: Родитель)" />
+          <input id="contactValue" placeholder="Email или Telegram (например: lev.basket@...)" />
+        </div>
+        <div class="row" style="margin-top:10px">
+          <button class="btn" id="saveContactBtn">Сохранить контакт</button>
+          <span class="mini" id="contactSaved"></span>
+        </div>
+
+        <p class="mini" style="margin-top:10px" id="ui_contact_warn">
+          ⚠️ Совет: не публикуйте телефон ребёнка. Лучше email/Telegram родителя.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer" id="ui_footer">
+      Сделано с любовью к баскетболу 🏀 • Версия 1.0 (можно улучшать бесконечно)
+    </div>
+  </div>
+
+  <script>
+    // ====== BILINGUAL TEXTS ======
+    const TEXT = {
+      ru: {
+        brand_title: "Лев Шиляев • Basketball",
+        brand_sub: "Хайлайты • Достижения • Прогресс",
+        cta: "Связаться",
+
+        title: "Лев • юный баскетболист",
+        subtitle: "Визитка игрока: биография, награды, хайлайты, рост по статистике и дневник тренировок.",
+        badge1: "Цель: NBA (мечта + план)",
+        badge2: "Хайлайты: скоро",
+        badge3: "Прогресс: график",
+
+        pos_l: "Позиция (можно поменять)",
+        hw_l: "Рост / Вес",
+        team_l: "Команда / клуб",
+        city_l: "Город",
+        privacy: "⚠️ Для публичного сайта лучше не писать адрес/школу/точные личные данные. Достаточно имени и спортивных фактов.",
+
+        quick: "Быстро",
+        quick_hint: "суть игрока",
+        q1: "Сильные стороны",
+        q1s: "Трудолюбие • Скорость • Любовь к игре (пример — можно поменять)",
+        q2: "Роль на площадке",
+        q2s: "Разгон атак • Защита • Бросок (пример)",
+        q3: "Фокус сейчас",
+        q3s: "% штрафных • дриблинг под давлением • чтение игры (пример)",
+
+        training: "Тренировки",
+        training_hint: "сохраняется на этом устройстве",
+        total_train: "Всего:",
+        add: "+ Добавить",
+        reset: "Сброс",
+        train_note: "Нажми “+ Добавить” — запись появится ниже и сохранится.",
+        t_date: "Дата",
+        t_what: "Что",
+        t_min: "Мин",
+
+        bio: "Биография",
+        bio_hint: "люди — это история",
+        bio_text: "Лев начал заниматься баскетболом в 5 лет. Он влюблён в игру и мечтает играть в NBA. Здесь — его путь: тренировки, турниры, рост в статистике и лучшие моменты.",
+        ach: "Достижения",
+        ach_hint: "добавляйте по мере роста",
+        ach_ex1: "Год • Место • Команда • Роль/статистика",
+        ach_ex2: "MVP / лучший защитник / лучший снайпер — что угодно",
+        ach_tip: "Позже я сделаю удобную форму “добавить награду”, чтобы вы не лазили в код.",
+
+        hi: "Хайлайты",
+        hi_hint: "видео лучших моментов",
+        vid1: "Пока видео нет 🙂\n\nКогда появится YouTube — я вставлю сюда ролик одним движением.",
+        vid2: "Можно сделать: “топ-10 моментов” + “лучший матч” + “защита”.",
+
+        progress: "Прогресс",
+        progress_hint: "пример графика",
+        m_pts: "Очки за игру (пример)",
+        m_reb: "Подборы (пример)",
+        m_ast: "Передачи (пример)",
+        m_tour: "Турниры/победы (пример)",
+        prog_note: "Сейчас тут пример. Потом вы дадите 5–10 реальных точек (по годам/месяцам) — и график станет настоящим.",
+
+        quiz: "Квиз",
+        quiz_hint: "игра + знания",
+        quiz_q: "Вопрос",
+        quiz_score: "Счёт:",
+        quiz_note: "Мы можем сделать отдельный режим: “вопросы про достижения Льва”, когда появится список турниров.",
+
+        contact: "Контакты",
+        contact_hint: "для тренеров/селекционеров",
+        contact_text: "Как связаться",
+        contact_small: "Здесь лучше разместить один безопасный контакт (например, почту родителя или форму).",
+        save_contact: "Сохранить контакт",
+        contact_warn: "⚠️ Совет: не публикуйте телефон ребёнка. Лучше email/Telegram родителя.",
+
+        footer: "Сделано с любовью к баскетболу 🏀 • Версия 1.0 (можно улучшать бесконечно)"
+      },
+      en: {
+        brand_title: "Lev Shilyaev • Basketball",
+        brand_sub: "Highlights • Achievements • Progress",
+        cta: "Contact",
+
+        title: "Lev
